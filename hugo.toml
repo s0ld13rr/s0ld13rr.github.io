@@ -1,0 +1,45 @@
+baseURL = "https://www.s0ld13r.kz/"
+languageCode = "en-us"
+title = "s0ld13r's blog"
+theme = "PaperMod"
+author = "s0ld13r"
+
+enableRobotsTXT = true     
+canonifyURLs = true        
+relativeURLs = false       
+
+pagination.pagerSize = 10              
+summaryLength = 70         
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[params]
+  domain = "s0ld13r.kz"
+  defaultTheme = "auto"
+  disableThemeToggle = false
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowCodeCopyButtons = true
+  disableScrollToTop = false
+  comments = false 
+
+  [params.homeInfoParams]
+    Title = "Welcome to s0ld13r.kz"
+    Content = "Security Researcher | Threat Hunter | Red Teamer"
+
+  [[params.socialIcons]]
+    name = "telegram"
+    url = "https://t.me/s0ld13r_ch"
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/s0ld13r/"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/s0ld13rr"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
