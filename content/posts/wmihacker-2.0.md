@@ -194,8 +194,7 @@ The table below maps key attacker actions to MITRE ATT&CK techniques. It shows h
 | **Spearphishing Attachment**                  | [T1566.001](https://attack.mitre.org/techniques/T1566/001/) | Initial access via email with malicious attachment       |
 | **Windows Management Instrumentation (WMI)**  | [T1047](https://attack.mitre.org/techniques/T1047/)         | Remote command execution using WMI                       |
 | **Command and Scripting Interpreter: Python** | [T1059.006](https://attack.mitre.org/techniques/T1059/006/) | Use of Python for execution                              |
-| **Ingress Tool Transfer**                     | [T1105](https://attack.mitre.org/techniques/T1105/)         | Downloading payloads (e.g., from Pastebin)               |
-| **Application Layer Protocol: ICMP**          | [T1043](https://attack.mitre.org/techniques/T1043/)         | Use of ICMP for signaling                                |
+| **Ingress Tool Transfer**                     | [T1105](https://attack.mitre.org/techniques/T1105/)         | Downloading payloads (e.g., from Pastebin)               |                         |
 | **Non-Application Layer Protocol**            | [T1095](https://attack.mitre.org/techniques/T1095/)         | C2 communication via non-standard protocols (e.g., ICMP) |
 | **Exfiltration Over Web Service**             | [T1567.002](https://attack.mitre.org/techniques/T1567/002/) | Exfiltration using Telegram Bot API                      |
 | **Obfuscated Files or Information**           | [T1027](https://attack.mitre.org/techniques/T1027/)         | XOR encryption for payload confidentiality               |
