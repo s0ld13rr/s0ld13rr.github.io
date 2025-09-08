@@ -44,6 +44,10 @@ summaryLength = 70
     name = "twitter"
     url = "https://x.com/s0ld133rr"
 
+  [[params.socialIcons]]
+    name = "ctftime"
+    url = "https://ctftime.org/user/163016"
+
 [caches]
   [caches.images]
     dir = ':cacheDir/images'
