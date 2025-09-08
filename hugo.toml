@@ -39,6 +39,10 @@ summaryLength = 70
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/s0ld13rr"
+  
+  [[params.socialIcons]]
+    name = "twitter"
+    url = "https://x.com/s0ld133rr"
 
 [caches]
   [caches.images]

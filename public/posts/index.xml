@@ -6,8 +6,25 @@
     <description>Recent content in Posts on s0ld13r&#39;s blog</description>
     <generator>Hugo -- 0.147.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 May 2025 15:44:24 +0500</lastBuildDate>
+    <lastBuildDate>Mon, 08 Sep 2025 17:58:32 +0500</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setting up Adaptix C2 framework</title>
+      <link>http://localhost:1313/posts/adaptix-c2/</link>
+      <pubDate>Mon, 08 Sep 2025 17:58:32 +0500</pubDate>
+      <guid>http://localhost:1313/posts/adaptix-c2/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Anatomy of Exfiltration 📤</title>
+      <link>http://localhost:1313/posts/exfiltration-channels/</link>
+      <pubDate>Mon, 01 Sep 2025 23:42:33 +0500</pubDate>
+      <guid>http://localhost:1313/posts/exfiltration-channels/</guid>
+      <description>&lt;h2 id=&#34;intro&#34;&gt;Intro&lt;/h2&gt;
+&lt;p&gt;Exfiltration consists of techniques that adversaries may use to steal data from your network. Once they’ve collected data, adversaries often package it to avoid detection while removing it. This can include compression and encryption. Techniques for getting data out of a target network typically include transferring it over their command and control channel or an alternate channel and may also include putting size limits on the transmission.&lt;/p&gt;
+&lt;h2 id=&#34;disclaimer&#34;&gt;Disclaimer&lt;/h2&gt;
+&lt;p&gt;This article is intended strictly for educational and research purposes. The techniques, tools, and concepts discussed here are designed to enhance understanding of adversary tactics, improve defensive capabilities, and support authorized Red Team assessments. Any unauthorized or malicious use of the information provided is strongly condemned and may be illegal.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>WMIHacker 2.0 👾</title>
       <link>http://localhost:1313/posts/wmihacker-2.0/</link>
@@ -20,13 +37,14 @@ This article is intended strictly for educational and research purposes. The tec
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#earth-kurma-chain&#34;&gt;Earth Kurma Chain&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#symmetric--assymetric-approach-in-c2-infra&#34;&gt;Symmetric &amp;amp; Assymetric approach in C2 infra&lt;/a&gt;
+&lt;li&gt;&lt;a href=&#34;#symmetric--asymmetric-approach-in-c2-infra&#34;&gt;Symmetric &amp;amp; Asymmetric approach in C2 infra&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#symmetric-c2&#34;&gt;Symmetric C2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#asymmetric-c2&#34;&gt;Asymmetric C2&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#wmihacker-20&#34;&gt;WMIHacker 2.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mitre-attck-mapping&#34;&gt;MITRE ATT&amp;amp;CK mapping&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#detection--response&#34;&gt;Detection &amp;amp; Response&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#conclusion&#34;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;

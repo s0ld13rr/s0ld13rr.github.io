@@ -2,6 +2,8 @@
 date = '2025-05-04T15:44:24+05:00'
 draft = false
 title = 'WMIHacker 2.0 👾'
+author = 's0ld13r'
+tags = ['backdoor', 'wmi', 'redteamops']
 +++
 
 >DISCLAIMER:
