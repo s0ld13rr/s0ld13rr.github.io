@@ -407,3 +407,5 @@ The arms race between attackers and defenders continues. Understanding these adv
 - [Backdoors in XAMP stack (part III): Apache Modules](https://www.tarlogic.com/blog/backdoors-modules-apache/)
 - [Malicious Apache Module: a clarification](https://www.welivesecurity.com/2012/12/20/malicious-apache-module-a-clarification/)
 - [Developing modules for the Apache HTTP Server 2.4](https://httpd.apache.org/docs/2.4/developer/modguide.html)
+- [Backdoor for Apache HTTP Server](https://github.com/WangYihang/Apache-HTTP-Server-Module-Backdoor)
+- [Apache2 mod_backdoor](https://github.com/VladRico/apache2_BackdoorMod)
