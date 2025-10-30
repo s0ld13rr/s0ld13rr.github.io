@@ -2,37 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/command--control/</loc>
-    <lastmod>2025-09-08T17:58:32+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-09-08T17:58:32+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/redteamops/</loc>
-    <lastmod>2025-09-08T17:58:32+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2025-09-08T17:58:32+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/adaptix-c2/</loc>
-    <lastmod>2025-09-08T17:58:32+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-09-08T17:58:32+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/exfiltration-channels/</loc>
-    <lastmod>2025-09-01T23:42:33+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/data-exfiltration/</loc>
-    <lastmod>2025-09-01T23:42:33+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/data-security/</loc>
-    <lastmod>2025-09-01T23:42:33+05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/threat-hunting/</loc>
-    <lastmod>2025-09-01T23:42:33+05:00</lastmod>
+    <loc>http://localhost:1313/tags/apache/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/backdoor/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/persistence/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/apache-modules-persistence/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/red-team/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-10-30T09:36:24+05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/redteamops/</loc>
     <lastmod>2025-05-04T15:44:24+05:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/wmi/</loc>

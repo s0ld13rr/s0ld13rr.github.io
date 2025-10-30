@@ -5,9 +5,23 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Setting up Adaptix C2 framework | s0ld13r&#39;s blog</title>
-<meta name="keywords" content="command &amp; control, redteamops">
-<meta name="description" content="Setting up Adaptix C2 framework - s0ld13r&#39;s blog">
+<title>Practical OPSEC for AdaptixC2 | s0ld13r&#39;s blog</title>
+<meta name="keywords" content="command &amp; control, redteamops, adaptixc2, opsec">
+<meta name="description" content="
+DISCLAIMER:
+This article is intended strictly for educational and research purposes. The techniques, tools, and concepts discussed here are designed to enhance understanding of adversary tactics, improve defensive capabilities, and support authorized Red Team assessments. Any unauthorized or malicious use of the information provided is strongly condemned and may be illegal.
+Table of Contents
+
+Introduction
+Why OPSEC matters for Red Teamers
+Basic AdaptixC2 setup
+How Defenders Hunt for C2?
+Hardening C2 infrastructure
+Making auto-deployment tool
+Conclusion
+
+Introduction
+">
 <meta name="author" content="s0ld13r">
 <link rel="canonical" href="http://localhost:1313/posts/adaptix-c2/">
 <link crossorigin="anonymous" href="http://localhost:1313/assets/css/stylesheet.6da9a63d25a9608bca2f7f907a030e887a7dd3c3f3918e4cc113129361414bda.css" integrity="sha256-bammPSWpYIvKL3&#43;QegMOiHp908PzkY5MwRMSk2FBS9o=" rel="preload stylesheet" as="style">
@@ -107,7 +121,7 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      Setting up Adaptix C2 framework
+      Practical OPSEC for AdaptixC2
       <span class="entry-hint" title="Draft">
         <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
           <path
@@ -115,15 +129,92 @@
         </svg>
       </span>
     </h1>
-    <div class="post-meta"><span title='2025-09-08 17:58:32 +0500 +05'>September 8, 2025</span>&nbsp;·&nbsp;0 min&nbsp;·&nbsp;s0ld13r
+    <div class="post-meta"><span title='2025-09-08 17:58:32 +0500 +05'>September 8, 2025</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;s0ld13r
 
 </div>
   </header> 
+  <div class="post-content"><blockquote>
+<p>DISCLAIMER:
+This article is intended strictly for educational and research purposes. The techniques, tools, and concepts discussed here are designed to enhance understanding of adversary tactics, improve defensive capabilities, and support authorized Red Team assessments. Any unauthorized or malicious use of the information provided is strongly condemned and may be illegal.</p></blockquote>
+<h2 id="table-of-contents">Table of Contents<a hidden class="anchor" aria-hidden="true" href="#table-of-contents">#</a></h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#why-opsec-matters-for-red-teamers">Why OPSEC matters for Red Teamers</a></li>
+<li><a href="#basic-adaptixc2-setup">Basic AdaptixC2 setup</a></li>
+<li><a href="#how-defenders-hunt-for-c2">How Defenders Hunt for C2?</a></li>
+<li><a href="#hardening-c2-infrastructure">Hardening C2 infrastructure</a></li>
+<li><a href="#making-auto-deployment-tool">Making auto-deployment tool</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h2>
+<p><img alt="AdaptixC2 Practical OPSEC" loading="lazy" src="http://localhost:1313/adaptix-practical-opsec.png"></p>
+<p>In red team operations, operational security (OPSEC) is often the only thing standing between a successful engagement and total exposure. Misconfigured C2 profiles, default ports, and unmodified headers are enough for defenders to fingerprint and block entire infrastructures within minutes.</p>
+<p>This article focuses on practical OPSEC hardening for AdaptixC2 — small, concrete steps that drastically reduce detection surface. You won’t find theory here, only actionable configurations and common-sense modifications proven in real environments. I chose AdaptixC2 because it’s open-source, highly customizable, and steadily gaining popularity within the cybersecurity community. Its flexibility makes it a solid platform for both research and red team operations. Also, user inferface and workflow looks like a CobaltStrike &amp; Havoc.</p>
+<p>By following this checklist, your teamserver will blend in better, resist fingerprinting, and maintain persistence longer during operations.</p>
+<h2 id="why-opsec-matters-for-red-teamers">Why OPSEC matters for Red Teamers<a hidden class="anchor" aria-hidden="true" href="#why-opsec-matters-for-red-teamers">#</a></h2>
+<p>Operational security (OPSEC) isn’t just about keeping your own tools safe — it’s about ensuring your tests are realistic, repeatable, and (critically) legally and ethically bounded.</p>
+<p>Good OPSEC reduces accidental exposure of infrastructure, prevents easy attribution to your organization, avoids contaminating customer environments, and helps defenders improve detection without being misled by avoidable mistakes.</p>
+<p>When using a C2 framework such as Adaptix in assessments, small defaults are often the easiest signals for defenders and automated detection systems to pick up. Hardening those defaults and following best practices helps your engagement emulate a realistic adversary while keeping the exercise controlled.</p>
+<h2 id="basic-adaptixc2-setup">Basic AdaptixC2 setup<a hidden class="anchor" aria-hidden="true" href="#basic-adaptixc2-setup">#</a></h2>
+<p><img alt="AdaptixC2 Compilation" loading="lazy" src="http://localhost:1313/adaptix-compilation.png"></p>
+<p>here we compile all binaries and components</p>
+<p><img alt="AdaptixC2 Server" loading="lazy" src="http://localhost:1313/adaptixc2-server.png"></p>
+<p>AdaptixC2 Server</p>
+<p><img alt="AdaptixC2 Client" loading="lazy" src="http://localhost:1313/adaptix-client.png"></p>
+<p>Client execution</p>
+<h2 id="how-defenders-hunt-for-c2">How Defenders Hunt for C2?<a hidden class="anchor" aria-hidden="true" href="#how-defenders-hunt-for-c2">#</a></h2>
+<p>We can use this query in Censys.io to hunt for those indicators:</p>
+<pre tabindex="0"><code class="language-Censys" data-lang="Censys">web.endpoints.http.body: &#34;AdaptixC2&#34;
+</code></pre><p><img alt="AdaptixC2 Censys Search" loading="lazy" src="http://localhost:1313/adaptix_censys_result.png"></p>
+<h2 id="hardening-c2-infrastructure">Hardening C2 infrastructure<a hidden class="anchor" aria-hidden="true" href="#hardening-c2-infrastructure">#</a></h2>
+<p><img alt="Delete Version Header" loading="lazy" src="http://localhost:1313/adaptix-delete-version-header.png"></p>
+<p>ну вот нахуя палиться если можно не палиться?</p>
+<p><img alt="AdaptixC2 404 page" loading="lazy" src="http://localhost:1313/adaptix-404-page.png"></p>
+<p>YOU NEED TO CHANGE DEFAULT 404 PAGE</p>
+<h2 id="making-auto-deployment-tool">Making auto-deployment tool<a hidden class="anchor" aria-hidden="true" href="#making-auto-deployment-tool">#</a></h2>
+<p>asdasd</p>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>asdsd</p>
+<h2 id="checklist">Checklist<a hidden class="anchor" aria-hidden="true" href="#checklist">#</a></h2>
+<ol>
+<li>
+<p>Change the C2 default port to a high port (<code>49152–65535</code>)</p>
+</li>
+<li>
+<p>Set a strong password for the teamserver (≥16 chars, random)</p>
+</li>
+<li>
+<p>Rename the server in <code>profile.json</code> to a neutral / generated hostname</p>
+</li>
+<li>
+<p>Replace the default 404 page (remove recognizable signature)</p>
+</li>
+<li>
+<p>Change the default <code>/endpoint</code> in the C2 profile (avoid standard paths)</p>
+</li>
+<li>
+<p>Remove the <code>Adaptix Version</code> HTTP header from <code>profile.json</code></p>
+</li>
+<li>
+<p>For HTTP listener: change Heartbeat header and User-Agent</p>
+</li>
+<li>
+<p>Generate and install SSL certificates for the HTTP listener (TLS required)</p>
+</li>
+<li>
+<p>Add proper, neutral HTTP headers when generating the agent (e.g., neutral Server, Cache-Control, X-Content-Type-Options, etc.)</p>
+</li>
+</ol>
+
+
+  </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/command--control/">Command &amp; Control</a></li>
       <li><a href="http://localhost:1313/tags/redteamops/">Redteamops</a></li>
+      <li><a href="http://localhost:1313/tags/adaptixc2/">Adaptixc2</a></li>
+      <li><a href="http://localhost:1313/tags/opsec/">Opsec</a></li>
     </ul>
   </footer>
 </article>

@@ -6,8 +6,20 @@
     <description>Recent content in Backdoor on s0ld13r&#39;s blog</description>
     <generator>Hugo -- 0.147.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 May 2025 15:44:24 +0500</lastBuildDate>
+    <lastBuildDate>Thu, 30 Oct 2025 09:36:24 +0500</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/backdoor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Persistent Backdoors via Apache Modules 🕷️</title>
+      <link>http://localhost:1313/posts/apache-modules-persistence/</link>
+      <pubDate>Thu, 30 Oct 2025 09:36:24 +0500</pubDate>
+      <guid>http://localhost:1313/posts/apache-modules-persistence/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DISCLAIMER:&lt;/strong&gt;
+This article is intended strictly for educational and research purposes. The techniques, tools, and concepts discussed here are designed to enhance understanding of adversary tactics, improve defensive capabilities, and support authorized Red Team assessments. Any unauthorized or malicious use of the information provided is strongly condemned and may be illegal.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;&lt;img alt=&#34;Article&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/apache-persistence-cover.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;While studying APT and Red Team materials, I came across an excellent article from &lt;a href=&#34;https://cicada-8.medium.com/from-http-to-rce-how-to-leave-backdoor-in-iis-cbef8249eba9&#34;&gt;CICADA8&lt;/a&gt; about establishing persistence in infrastructure through IIS modules instead of classic webshells.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>WMIHacker 2.0 👾</title>
       <link>http://localhost:1313/posts/wmihacker-2.0/</link>
