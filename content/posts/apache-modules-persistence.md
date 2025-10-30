@@ -24,7 +24,7 @@ The advantages of this approach compared to conventional webshells are compellin
 
 - **Process-level execution**: The module runs inside the web server process and doesn't reside in the public webroot, making it significantly harder to discover through simple file enumeration
 - **URL-agnostic operation**: Not tied to a specific endpoint, providing flexibility in backdoor logic implementation
-- **Stealth**: Much harder to detect through standard Apache access logs since the malicious activity occurs at the module level
+- **Stealth**: Much harder to detect through standard Apache access logs since the malicious activity occurs at the module level, but its not absolutely stealthy. 
 - **Persistence**: Survives webroot cleanups and application redeployments
 
 This article explores these attack vectors for research purposes and does not encourage malicious activity. Let's dive into the technical implementation.
@@ -354,6 +354,8 @@ Monitor critical Apache directories for new or modified files:
 /usr/lib/apache2/modules/*.so
 ```
 
+In my case there is Debian based distro, and in your environment the path's may differ.
+
 **Detection strategy:**
 - Baseline legitimate modules during system provisioning
 - Alert on new `.so` files with recent creation timestamps
@@ -366,6 +368,8 @@ Monitor critical Apache directories for new or modified files:
 - Unusual outbound connections from Apache process
 - HTTP requests with suspicious custom headers (e.g., `X-Request-ID` with long Base64 strings)
 - Consistent Base64-encoded responses in HTTP traffic
+
+The NGFW and IDS logs may help for inspecting such activity in the network. 
 
 ## Conclusion
 
