@@ -2,6 +2,7 @@
 date: '2025-10-30T09:36:24+05:00'
 draft: false
 title: 'Persistent Backdoors via Apache Modules 🕷️'
+author: 's0ld13r'
 tags: ['backdoor', 'apache', 'persistence', 'red-team']
 ---
 

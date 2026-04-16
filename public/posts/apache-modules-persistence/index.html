@@ -13,7 +13,7 @@ This article is intended strictly for educational and research purposes. The tec
 Intro
 
 While studying APT and Red Team materials, I came across an excellent article from CICADA8 about establishing persistence in infrastructure through IIS modules instead of classic webshells.">
-<meta name="author" content="">
+<meta name="author" content="s0ld13r">
 <link rel="canonical" href="http://localhost:1313/posts/apache-modules-persistence/">
 <link crossorigin="anonymous" href="http://localhost:1313/assets/css/stylesheet.6da9a63d25a9608bca2f7f907a030e887a7dd3c3f3918e4cc113129361414bda.css" integrity="sha256-bammPSWpYIvKL3&#43;QegMOiHp908PzkY5MwRMSk2FBS9o=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
@@ -114,7 +114,7 @@ While studying APT and Red Team materials, I came across an excellent article fr
     <h1 class="post-title entry-hint-parent">
       Persistent Backdoors via Apache Modules 🕷️
     </h1>
-    <div class="post-meta"><span title='2025-10-30 09:36:24 +0500 +05'>October 30, 2025</span>&nbsp;·&nbsp;9 min
+    <div class="post-meta"><span title='2025-10-30 09:36:24 +0500 +05'>October 30, 2025</span>&nbsp;·&nbsp;9 min&nbsp;·&nbsp;s0ld13r
 
 </div>
   </header> 
@@ -131,7 +131,7 @@ This article is intended strictly for educational and research purposes. The tec
 <ul>
 <li><strong>Process-level execution</strong>: The module runs inside the web server process and doesn&rsquo;t reside in the public webroot, making it significantly harder to discover through simple file enumeration</li>
 <li><strong>URL-agnostic operation</strong>: Not tied to a specific endpoint, providing flexibility in backdoor logic implementation</li>
-<li><strong>Stealth</strong>: Much harder to detect through standard Apache access logs since the malicious activity occurs at the module level</li>
+<li><strong>Stealth</strong>: Much harder to detect through standard Apache access logs since the malicious activity occurs at the module level, but its not absolutely stealthy.</li>
 <li><strong>Persistence</strong>: Survives webroot cleanups and application redeployments</li>
 </ul>
 <p>This article explores these attack vectors for research purposes and does not encourage malicious activity. Let&rsquo;s dive into the technical implementation.</p>
@@ -367,7 +367,8 @@ This article is intended strictly for educational and research purposes. The tec
 </span></span><span style="display:flex;"><span>/etc/apache2/mods-enabled/*.load
 </span></span></code></pre></div><p><strong>Compiled modules:</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/lib/apache2/modules/*.so
-</span></span></code></pre></div><p><strong>Detection strategy:</strong></p>
+</span></span></code></pre></div><p>In my case there is Debian based distro, and in your environment the path&rsquo;s may differ.</p>
+<p><strong>Detection strategy:</strong></p>
 <ul>
 <li>Baseline legitimate modules during system provisioning</li>
 <li>Alert on new <code>.so</code> files with recent creation timestamps</li>
@@ -381,6 +382,7 @@ This article is intended strictly for educational and research purposes. The tec
 <li>HTTP requests with suspicious custom headers (e.g., <code>X-Request-ID</code> with long Base64 strings)</li>
 <li>Consistent Base64-encoded responses in HTTP traffic</li>
 </ul>
+<p>The NGFW and IDS logs may help for inspecting such activity in the network.</p>
 <h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
 <p>Apache module-based backdoors represent a sophisticated persistence technique that combines stealth, flexibility, and resilience. By operating at the web server process level rather than as traditional webshells, these backdoors evade many common detection mechanisms.</p>
 <h3 id="key-takeaways">Key Takeaways<a hidden class="anchor" aria-hidden="true" href="#key-takeaways">#</a></h3>
@@ -415,6 +417,8 @@ This article is intended strictly for educational and research purposes. The tec
 <li><a href="https://www.tarlogic.com/blog/backdoors-modules-apache/">Backdoors in XAMP stack (part III): Apache Modules</a></li>
 <li><a href="https://www.welivesecurity.com/2012/12/20/malicious-apache-module-a-clarification/">Malicious Apache Module: a clarification</a></li>
 <li><a href="https://httpd.apache.org/docs/2.4/developer/modguide.html">Developing modules for the Apache HTTP Server 2.4</a></li>
+<li><a href="https://github.com/WangYihang/Apache-HTTP-Server-Module-Backdoor">Backdoor for Apache HTTP Server</a></li>
+<li><a href="https://github.com/VladRico/apache2_BackdoorMod">Apache2 mod_backdoor</a></li>
 </ul>
 
 
@@ -432,7 +436,7 @@ This article is intended strictly for educational and research purposes. The tec
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://localhost:1313/">s0ld13r&#39;s blog</a></span> · 
+        <span>&copy; 2026 <a href="http://localhost:1313/">s0ld13r&#39;s blog</a></span> · 
 
     <span>
         Powered by
